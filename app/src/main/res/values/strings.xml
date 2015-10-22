@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RugbyWorldCup</string>
+    <string name="action_settings">Settings</string>
+    <string name="Winner">Winner</string>
+    <string name="lucky_dip">LuckyDip</string>
+    <string name="result_quarters">Quarters</string>
+    <string name="result_semi">Semis</string>
+    <string name="result_final">Final</string>
+    <string name="lucky_dip_toggle">LuckyDip/Clear</string>
+
+</resources>

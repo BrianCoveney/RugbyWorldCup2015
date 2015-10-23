@@ -4,23 +4,22 @@ package com.cit.briancoveney.rugbyworldcup;
  * Created by briancoveney on 10/22/15.
  */
 public enum Team {
-    IRELAND("ire", 1),
-    SCOTLAND("sct", 2),
-    AUSTRALIA("aus", 3),
-    NEW_ZEALAND("nzl", 4),
-    WALES("wal", 5),
-    SOUTH_AFRICA("rsa", 6),
-    ARGENTINA("arg", 7),
-    FRANCE("fra", 8),
-    SAMOA("sam", 9),
-    ENGLAND("eng", 10),
-    ITALY("ita", 11),
-    JAPAN("jpn", 12),
-    ROMANIA("rom", 13),
-    CANADA("can", 14),
-    FIJI("fij", 15),
-    URUGUAY("urg", 16)
-    ;
+    IRE("ire", 1),
+    SCT("sct", 2),
+    AUS("aus", 3),
+    NZL("nzl", 4),
+    WAL("wal", 5),
+    RSA("rsa", 6),
+    ARG("arg", 7),
+    FRA("fra", 8),
+    SAM("sam", 9),
+    ENG("eng", 10),
+    ITA("ita", 11),
+    JPN("jpn", 12),
+    ROM("rom", 13),
+    CAN("can", 14),
+    FIJ("fij", 15),
+    URG("urg", 16);
 
     private String teamName;
     private int teamColor;

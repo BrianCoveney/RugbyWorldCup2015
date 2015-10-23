@@ -19,6 +19,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,20 +48,26 @@ public class MainActivity extends AppCompatActivity {
         final Round theWinner = new Round();
 
 
-        Match match1 = new Match(Team.SOUTH_AFRICA, Team.WALES);
-        Match match2 = new Match(Team.NEW_ZEALAND, Team.FRANCE);
-        Match match3 = new Match(Team.IRELAND, Team.ARGENTINA);
-        Match match4 = new Match(Team.AUSTRALIA, Team.SCOTLAND);
-        Match match5 = new Match(Team.ARGENTINA, Team.URUGUAY);
-        Match match6 = new Match(Team.ENGLAND, Team.FIJI);
-        Match match7 = new Match(Team.ROMANIA, Team.CANADA);
-        Match match8 = new Match(Team.JAPAN, Team.SAMOA);
+        Match match1 = new Match(Team.RSA, Team.WAL);
+        Match match2 = new Match(Team.NZL, Team.FRA);
+        Match match3 = new Match(Team.IRE, Team.ARG);
+        Match match4 = new Match(Team.AUS, Team.SCT);
+        Match match5 = new Match(Team.ARG, Team.URG);
+        Match match6 = new Match(Team.ENG, Team.FIJ);
+        Match match7 = new Match(Team.ROM, Team.CAN);
+        Match match8 = new Match(Team.JPN, Team.SAM);
 
 
         semiFinals.addMatch(match1);
+        semiFinals.addMatch(match2);
+        semiFinals.addMatch(match3);
+        semiFinals.addMatch(match4);
+
 
         finalGames.addMatch(match2);
+        finalGames.addMatch(match3);
 
+        theWinner.addMatch(match2);
         theWinner.addMatch(match3);
 
 
@@ -73,29 +81,41 @@ public class MainActivity extends AppCompatActivity {
                 {
                     // For Semi Finals
                     ArrayList<Team> semis = semiFinals.playMatchesForSemis();
-                    for(Team semi : semis)
-                    {
-                        edTSemi1.setText(semi.getTeamName().toString());
-                    }
+
+                    Collections.shuffle(semis);
+
+                    edTSemi1.setText(semis.get(0).toString());
+                    edTSemi2.setText(semis.get(1).toString());
+                    edTSemi3.setText(semis.get(2).toString());
+                    edTSemi4.setText(semis.get(3).toString());
+
 
                     // For Finals
                     ArrayList<Team> finals = finalGames.playMatchesForFinals();
-                    for(Team theFinal : finals)
-                    {
-                        edTF1.setText(theFinal.getTeamName().toString());
-                    }
+
+                    Collections.shuffle(finals);
+                    edTF1.setText(finals.get(0).toString());
+                    edTF2.setText(finals.get(1).toString());
 
 
                     // For Winner
                     ArrayList<Team> winners = theWinner.playMatchesForRound();
-                    for(Team winner : winners)
-                    {
-                        edTW.setText(winner.getTeamName().toString());
-                    }
+
+                    Collections.shuffle(winners);
+                    edTW.setText(winners.get(0).toString());
+                    edTW.setText(winners.get(1).toString());
+
+
+
+
 
                 }else{
                     edTSemi1.setText(null);
+                    edTSemi2.setText(null);
+                    edTSemi3.setText(null);
+                    edTSemi4.setText(null);
                     edTF1.setText(null);
+                    edTF2.setText(null);
                     edTW.setText(null);
                 }
 
@@ -243,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 this.text.setTextColor(getResources().getColor(R.color.nzl_blue));
             }else if(e.toString().equalsIgnoreCase("fra")) {
                 this.text.setTextColor(getResources().getColor(R.color.blue));
-            }else if(e.toString().contains("arg")) {
+            }else if(e.toString().equalsIgnoreCase("arg")) {
                 this.text.setTextColor(getResources().getColor(R.color.cyan));
             }
         }

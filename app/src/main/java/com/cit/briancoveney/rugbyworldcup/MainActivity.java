@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         countryName = new ArrayList<EditText>();
         countryEditTextReferences();
         currentCountryTextWatcher();
@@ -48,27 +52,38 @@ public class MainActivity extends AppCompatActivity {
         final Round theWinner = new Round();
 
 
-        Match match1 = new Match(Team.RSA, Team.WAL);
-        Match match2 = new Match(Team.NZL, Team.FRA);
-        Match match3 = new Match(Team.IRE, Team.ARG);
-        Match match4 = new Match(Team.AUS, Team.SCT);
-        Match match5 = new Match(Team.ARG, Team.URG);
-        Match match6 = new Match(Team.ENG, Team.FIJ);
-        Match match7 = new Match(Team.ROM, Team.CAN);
-        Match match8 = new Match(Team.JPN, Team.SAM);
+        final Match match1 = new Match(Team.RSA, Team.WAL);
+        final Match match2 = new Match(Team.NZL, Team.FRA);
+        final Match match3 = new Match(Team.IRE, Team.ARG);
+        final Match match4 = new Match(Team.AUS, Team.SCT);
+        final Match match5 = new Match(Team.ARG, Team.URG);
+        final Match match6 = new Match(Team.ENG, Team.FIJ);
+        final Match match7 = new Match(Team.ROM, Team.CAN);
+        final Match match8 = new Match(Team.JPN, Team.SAM);
 
 
         semiFinals.addMatch(match1);
         semiFinals.addMatch(match2);
         semiFinals.addMatch(match3);
         semiFinals.addMatch(match4);
+        semiFinals.addMatch(match5);
+        semiFinals.addMatch(match6);
+        semiFinals.addMatch(match7);
+        semiFinals.addMatch(match8);
 
-
+        finalGames.addMatch(match1);
         finalGames.addMatch(match2);
         finalGames.addMatch(match3);
+        finalGames.addMatch(match4);
+        finalGames.addMatch(match5);
+        finalGames.addMatch(match6);
+        finalGames.addMatch(match7);
+        finalGames.addMatch(match8);
+
 
         theWinner.addMatch(match2);
         theWinner.addMatch(match3);
+
 
 
 
@@ -77,53 +92,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked)
-                {
+                if (isChecked) {
+
+                    // For Quarter Finals
+                    edTQrt1.setText(match1.chooseAWinner().toString());
+                    edTQrt2.setText(match2.chooseAWinner().toString());
+                    edTQrt3.setText(match3.chooseAWinner().toString());
+                    edTQrt4.setText(match4.chooseAWinner().toString());
+                    edTQrt5.setText(match5.chooseAWinner().toString());
+                    edTQrt6.setText(match6.chooseAWinner().toString());
+                    edTQrt7.setText(match7.chooseAWinner().toString());
+                    edTQrt8.setText(match8.chooseAWinner().toString());
+
                     // For Semi Finals
                     ArrayList<Team> semis = semiFinals.playMatchesForSemis();
-
-                    Collections.shuffle(semis);
-
-                    edTSemi1.setText(semis.get(0).toString());
-                    edTSemi2.setText(semis.get(1).toString());
-                    edTSemi3.setText(semis.get(2).toString());
-                    edTSemi4.setText(semis.get(3).toString());
+//                    Collections.shuffle(semis);
+                    edTSemi1.setText(semis.get(0).getTeamName().toUpperCase());
+                    edTSemi2.setText(semis.get(2).getTeamName().toUpperCase());
+                    edTSemi3.setText(semis.get(4).getTeamName().toUpperCase());
+                    edTSemi4.setText(semis.get(6).getTeamName().toUpperCase());
 
 
                     // For Finals
                     ArrayList<Team> finals = finalGames.playMatchesForFinals();
-
-                    Collections.shuffle(finals);
-                    edTF1.setText(finals.get(0).toString());
-                    edTF2.setText(finals.get(1).toString());
+                    edTF1.setText(finals.get(2).getTeamName().toUpperCase());
+                    edTF2.setText(finals.get(6).getTeamName().toUpperCase());
 
 
                     // For Winner
                     ArrayList<Team> winners = theWinner.playMatchesForRound();
-
-                    Collections.shuffle(winners);
-                    edTW.setText(winners.get(0).toString());
-                    edTW.setText(winners.get(1).toString());
-
-
-
+                    edTW.setText(winners.get(0).getTeamName().toUpperCase());
+                    edTW.setText(winners.get(1).getTeamName().toUpperCase());
 
 
                 }else{
-                    edTSemi1.setText(null);
-                    edTSemi2.setText(null);
-                    edTSemi3.setText(null);
-                    edTSemi4.setText(null);
-                    edTF1.setText(null);
-                    edTF2.setText(null);
+                    edTQrt1.setText(null); edTQrt2.setText(null);
+                    edTQrt3.setText(null); edTQrt4.setText(null);
+                    edTQrt5.setText(null); edTQrt6.setText(null);
+                    edTQrt7.setText(null); edTQrt8.setText(null);
+                    edTSemi1.setText(null); edTSemi2.setText(null);
+                    edTSemi3.setText(null); edTSemi4.setText(null);
+                    edTF1.setText(null); edTF2.setText(null);
                     edTW.setText(null);
                 }
-
             }
         });
-
     }
-
 
 
 
@@ -137,26 +151,20 @@ public class MainActivity extends AppCompatActivity {
         edTQrt6 = (EditText)findViewById(R.id.eTxtQrt6);
         edTQrt7 = (EditText)findViewById(R.id.eTxtQrt7);
         edTQrt8 = (EditText)findViewById(R.id.eTxtQrt8);
-
         edTSemi1 = (EditText)findViewById(R.id.eTxtSemi1);
         edTSemi2 = (EditText)findViewById(R.id.eTxtSemi2);
         edTSemi3 = (EditText)findViewById(R.id.eTxtSemi3);
         edTSemi4 = (EditText)findViewById(R.id.eTxtSemi4);
-
         edTF1 = (EditText)findViewById(R.id.eTxtFinal1);
         edTF2 = (EditText)findViewById(R.id.eTxtFinal2);
-
         edTW = (EditText)findViewById(R.id.eTxtWinner);
-
 
         edTSemi1.addTextChangedListener(SemiTextWatcher);
         edTSemi2.addTextChangedListener(SemiTextWatcher);
         edTSemi3.addTextChangedListener(SemiTextWatcher);
         edTSemi4.addTextChangedListener(SemiTextWatcher);
-
         edTF1.addTextChangedListener(FinalTextWatcher);
         edTF2.addTextChangedListener(FinalTextWatcher);
-
         edTW.addTextChangedListener(WinerTextWatcher);
     }
 
@@ -383,3 +391,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 }//end MainApplication
+
+
+
+//        edTQrt1 = (EditText)findViewById(R.id.eTxtQrt1);
+//        edTQrt1.setText(match1.chooseAWinner().toString());
+//
+//        edTQrt2 = (EditText)findViewById(R.id.eTxtQrt2);
+//        edTQrt2.setText(match2.chooseAWinner().toString());
+//
+//        edTQrt3 = (EditText)findViewById(R.id.eTxtQrt3);
+//        edTQrt3.setText(match3.chooseAWinner().toString());
+//
+//        edTQrt4 = (EditText)findViewById(R.id.eTxtQrt4);
+//        edTQrt4.setText(match4.chooseAWinner().toString());
+//
+//        edTQrt5 = (EditText)findViewById(R.id.eTxtQrt5);
+//        edTQrt5.setText(match5.chooseAWinner().toString());
+//
+//        edTQrt6 = (EditText)findViewById(R.id.eTxtQrt6);
+//        edTQrt6.setText(match6.chooseAWinner().toString());
+//
+//        edTQrt7 = (EditText)findViewById(R.id.eTxtQrt7);
+//        edTQrt7.setText(match7.chooseAWinner().toString());
+//
+//        edTQrt8 = (EditText)findViewById(R.id.eTxtQrt8);
+//        edTQrt8.setText(match8.chooseAWinner().toString());

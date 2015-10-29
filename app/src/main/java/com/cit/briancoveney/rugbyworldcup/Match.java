@@ -38,11 +38,11 @@ public class Match {
         int randomNum = (int)Math.random();
         if(randomNum == 0)
         {
-            return teamTwo;
+            return teamOne;
         }
         else
         {
-            return teamOne;
+            return teamTwo;
         }
     }
 

@@ -1,6 +1,7 @@
 package com.cit.briancoveney.rugbyworldcup;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         countryName = new ArrayList<EditText>();
+
+
         countryEditTextReferences();
         currentCountryTextWatcher();
         teamSelected();
+
 
 
         final Round semiFinals = new Round();
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         final Round theWinner = new Round();
 
 
-        final Match match1 = new Match(Team.RSA, Team.WAL);
+        final Match match1 = new Match(Team.WAL, Team.RSA);
         final Match match2 = new Match(Team.NZL, Team.FRA);
         final Match match3 = new Match(Team.IRE, Team.ARG);
         final Match match4 = new Match(Team.AUS, Team.SCT);
@@ -80,10 +81,14 @@ public class MainActivity extends AppCompatActivity {
         finalGames.addMatch(match7);
         finalGames.addMatch(match8);
 
-
+        theWinner.addMatch(match1);
         theWinner.addMatch(match2);
         theWinner.addMatch(match3);
-
+        theWinner.addMatch(match4);
+        theWinner.addMatch(match5);
+        theWinner.addMatch(match6);
+        theWinner.addMatch(match7);
+        theWinner.addMatch(match8);
 
 
 
@@ -104,25 +109,32 @@ public class MainActivity extends AppCompatActivity {
                     edTQrt7.setText(match7.chooseAWinner().toString());
                     edTQrt8.setText(match8.chooseAWinner().toString());
 
+
                     // For Semi Finals
                     ArrayList<Team> semis = semiFinals.playMatchesForSemis();
-//                    Collections.shuffle(semis);
-                    edTSemi1.setText(semis.get(0).getTeamName().toUpperCase());
-                    edTSemi2.setText(semis.get(2).getTeamName().toUpperCase());
-                    edTSemi3.setText(semis.get(4).getTeamName().toUpperCase());
-                    edTSemi4.setText(semis.get(6).getTeamName().toUpperCase());
+                    Match semi1 = new Match(semis.get(0), semis.get(1));
+                    Match semi2 = new Match(semis.get(2), semis.get(3));
+                    Match semi3 = new Match(semis.get(4), semis.get(5));
+                    Match semi4 = new Match(semis.get(6), semis.get(7));
+                    edTSemi1.setText(semi1.chooseAWinner().toString());
+                    edTSemi2.setText(semi2.chooseAWinner().toString());
+                    edTSemi3.setText(semi3.chooseAWinner().toString());
+                    edTSemi4.setText(semi4.chooseAWinner().toString());
+
 
 
                     // For Finals
                     ArrayList<Team> finals = finalGames.playMatchesForFinals();
-                    edTF1.setText(finals.get(2).getTeamName().toUpperCase());
-                    edTF2.setText(finals.get(6).getTeamName().toUpperCase());
+                    Match finals1 = new Match(finals.get(2), finals.get(1));
+                    Match finals2 = new Match(finals.get(4), finals.get(5));
+                    edTF1.setText(finals1.chooseAWinner().toString());
+                    edTF2.setText(finals2.chooseAWinner().toString());
 
 
                     // For Winner
                     ArrayList<Team> winners = theWinner.playMatchesForRound();
-                    edTW.setText(winners.get(0).getTeamName().toUpperCase());
-                    edTW.setText(winners.get(1).getTeamName().toUpperCase());
+                    Match myWinner = new Match(winners.get(2),winners.get(4));
+                    edTW.setText(myWinner.chooseAWinner().toString());
 
 
                 }else{
@@ -132,8 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     edTQrt7.setText(null); edTQrt8.setText(null);
                     edTSemi1.setText(null); edTSemi2.setText(null);
                     edTSemi3.setText(null); edTSemi4.setText(null);
-                    edTF1.setText(null); edTF2.setText(null);
-                    edTW.setText(null);
+                    edTF1.setText(null); edTF2.setText(null); edTW.setText(null);
                 }
             }
         });
@@ -170,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     /**********************************
 
     Color text to match Country Colors
@@ -180,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
     //add all EditText to the ArrayList
     public void countryEditTextReferences()
     {
+
         countryName.add((EditText) findViewById(R.id.eTxtQrt1));
         countryName.add((EditText) findViewById(R.id.eTxtQrt2));
         countryName.add((EditText) findViewById(R.id.eTxtQrt3));
@@ -188,15 +199,12 @@ public class MainActivity extends AppCompatActivity {
         countryName.add((EditText) findViewById(R.id.eTxtQrt6));
         countryName.add((EditText) findViewById(R.id.eTxtQrt7));
         countryName.add((EditText) findViewById(R.id.eTxtQrt8));
-
         countryName.add((EditText) findViewById(R.id.eTxtSemi1));
         countryName.add((EditText) findViewById(R.id.eTxtSemi2));
         countryName.add((EditText) findViewById(R.id.eTxtSemi3));
         countryName.add((EditText) findViewById(R.id.eTxtSemi4));
-
         countryName.add((EditText) findViewById(R.id.eTxtFinal1));
         countryName.add((EditText) findViewById(R.id.eTxtFinal2));
-
         countryName.add((EditText) findViewById(R.id.eTxtWinner));
     }
 
@@ -233,45 +241,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
         //Change EditText text colour when entering Country Name Abbreviations
         @Override
         public void afterTextChanged(Editable e)
         {
-            if(e.toString().equalsIgnoreCase("ire")) {
+            if(e.toString().equalsIgnoreCase(Team.IRE.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.green));
-            }else if(e.toString().equalsIgnoreCase("eng")){
+            }else if(e.toString().equalsIgnoreCase(Team.ENG.toString())){
                 this.text.setTextColor(getResources().getColor(R.color.white));
-            }else if(e.toString().equalsIgnoreCase("wal")){
+            }else if(e.toString().equalsIgnoreCase(Team.WAL.toString())){
                 this.text.setTextColor(getResources().getColor(R.color.red));
-            }else if(e.toString().equalsIgnoreCase("sct")){
+            }else if(e.toString().equalsIgnoreCase(Team.SCT.toString())){
                 this.text.setTextColor(getResources().getColor(R.color.blue));
-            }else if(e.toString().equalsIgnoreCase("ita")){
+            }else if(e.toString().equalsIgnoreCase(Team.ITA.toString())){
                 this.text.setTextColor(getResources().getColor(R.color.cyan));
-            }else if (e.toString().equalsIgnoreCase("rsa")){
+            }else if (e.toString().equalsIgnoreCase(Team.RSA.toString())){
                 this.text.setTextColor(getResources().getColor(R.color.rsa_green));
-            }else if(e.toString().equalsIgnoreCase("sam")){
+            }else if(e.toString().equalsIgnoreCase(Team.SAM.toString())){
                 this.text.setTextColor(getResources().getColor(R.color.sam_red));
-            }else if(e.toString().equalsIgnoreCase("jpn")) {
+            }else if(e.toString().equalsIgnoreCase(Team.JPN.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.jpn_red));
-            }else if(e.toString().equalsIgnoreCase("rom")) {
+            }else if(e.toString().equalsIgnoreCase(Team.ROM.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.rom_blue));
-            }else if(e.toString().equalsIgnoreCase("can")) {
+            }else if(e.toString().equalsIgnoreCase(Team.CAN.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.red));
-            }else if(e.toString().equalsIgnoreCase("fij")) {
+            }else if(e.toString().equalsIgnoreCase(Team.FIJ.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.cyan));
-            }else if(e.toString().equalsIgnoreCase("toi")) {
-                this.text.setTextColor(getResources().getColor(R.color.white));
-            }else if(e.toString().equalsIgnoreCase("ury")) {
+            }else if(e.toString().equalsIgnoreCase(Team.URG.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.cyan));
-            }else if(e.toString().equalsIgnoreCase("geo")) {
-                this.text.setTextColor(getResources().getColor(R.color.red));
-            }else if(e.toString().equalsIgnoreCase("nab")) {
-                this.text.setTextColor(getResources().getColor(R.color.nab_green));
-            }else if(e.toString().equalsIgnoreCase("nzl")) {
+            }else if(e.toString().equalsIgnoreCase(Team.NZL.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.nzl_blue));
-            }else if(e.toString().equalsIgnoreCase("fra")) {
+            }else if(e.toString().equalsIgnoreCase(Team.FRA.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.blue));
-            }else if(e.toString().equalsIgnoreCase("arg")) {
+            }else if(e.toString().equalsIgnoreCase(Team.ARG.toString())) {
                 this.text.setTextColor(getResources().getColor(R.color.cyan));
             }
         }
@@ -391,29 +394,3 @@ public class MainActivity extends AppCompatActivity {
 
 
 }//end MainApplication
-
-
-
-//        edTQrt1 = (EditText)findViewById(R.id.eTxtQrt1);
-//        edTQrt1.setText(match1.chooseAWinner().toString());
-//
-//        edTQrt2 = (EditText)findViewById(R.id.eTxtQrt2);
-//        edTQrt2.setText(match2.chooseAWinner().toString());
-//
-//        edTQrt3 = (EditText)findViewById(R.id.eTxtQrt3);
-//        edTQrt3.setText(match3.chooseAWinner().toString());
-//
-//        edTQrt4 = (EditText)findViewById(R.id.eTxtQrt4);
-//        edTQrt4.setText(match4.chooseAWinner().toString());
-//
-//        edTQrt5 = (EditText)findViewById(R.id.eTxtQrt5);
-//        edTQrt5.setText(match5.chooseAWinner().toString());
-//
-//        edTQrt6 = (EditText)findViewById(R.id.eTxtQrt6);
-//        edTQrt6.setText(match6.chooseAWinner().toString());
-//
-//        edTQrt7 = (EditText)findViewById(R.id.eTxtQrt7);
-//        edTQrt7.setText(match7.chooseAWinner().toString());
-//
-//        edTQrt8 = (EditText)findViewById(R.id.eTxtQrt8);
-//        edTQrt8.setText(match8.chooseAWinner().toString());

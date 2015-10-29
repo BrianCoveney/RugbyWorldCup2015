@@ -3,7 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="red">#f00000</color>
@@ -13,7 +12,7 @@
     <color name="magenta">#ff00ff</color>
     <color name="cyan">#00ffff</color>
     <color name="gold">#ffd700</color>
-    <color name="slate_gray">#2f4f4f</color>
+    <color name="slate_gray">#88acac</color>
     <color name="bronze">#965838</color>
     <color name="silver">#a8a8a8</color>
     <color name="rsa_green">#367751</color>
